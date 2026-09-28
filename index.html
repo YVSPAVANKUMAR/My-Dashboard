@@ -1,0 +1,3211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pavan's Educational Space</title>
+
+    <!-- Professional Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #29354f;
+            --navy-light: #3d4b68;
+            --orange: #e87543;
+            --blue: #3479a5;
+            --green: #34836d;
+            --red: #c35e58;
+            --gray: #60717b;
+            --yellow: #bd812f;
+            --cyan: #478b91;
+            --background: #f2f4fa;
+            --border: #e2e6ef;
+            --text: #303a50;
+            --muted: #7b8498;
+            --shadow: 0 12px 32px rgba(42, 54, 82, 0.07);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            letter-spacing: 0;
+        }
+
+        .app-shell {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 70px minmax(0, 1fr);
+        }
+
+        .side-rail {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 28px;
+            padding: 18px 10px;
+            background: #fff;
+            border-right: 1px solid var(--border);
+            z-index: 30;
+        }
+
+        .rail-logo,
+        .rail-avatar {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border-radius: 11px;
+            color: #fff;
+            background: var(--navy);
+            font-size: 15px;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .side-nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .rail-link {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            color: #8992a5;
+            transition: color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+        }
+
+        .rail-link svg {
+            width: 19px;
+            height: 19px;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 1.7;
+        }
+
+        .rail-link:hover,
+        .rail-link.active {
+            background: #eef1ff;
+            color: #6573d5;
+        }
+
+        .rail-link:hover {
+            transform: translateY(-1px);
+        }
+
+        .rail-footer {
+            margin-top: auto;
+        }
+
+        .rail-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #e9edf7;
+            color: var(--navy);
+            font-size: 12px;
+        }
+
+        .app-main {
+            min-width: 0;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .top-header {
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 0 34px;
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            animation: reveal 0.45s ease both;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            min-width: 0;
+            color: var(--navy);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .brand > div {
+            min-width: 0;
+        }
+
+        .brand-mark {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 9px;
+            background: #e9edf8;
+            color: #6372d3;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        .tagline {
+            margin-top: 2px;
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--muted);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .topbar-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .topbar-status .status-dot {
+            width: 7px;
+            height: 7px;
+        }
+
+        .topbar-avatar {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border: 1px solid #e4e8f0;
+            border-radius: 50%;
+            background: #f4f6fb;
+            color: var(--navy);
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            width: min(1420px, 100%);
+            margin: 0 auto;
+            padding: 32px 36px 42px;
+        }
+
+
+        /* =====================================================
+           DASHBOARD CARD
+        ===================================================== */
+
+        .dashboard-card {
+            padding: 0;
+            animation: reveal 0.65s 0.08s ease both;
+        }
+
+
+        /* =====================================================
+           DASHBOARD HEADER
+        ===================================================== */
+
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding-bottom: 22px;
+        }
+
+        .dashboard-heading h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0;
+            color: var(--navy);
+        }
+
+        .dashboard-heading p {
+            margin-top: 5px;
+
+            font-size: 12px;
+            font-weight: 400;
+
+            color: var(--muted);
+        }
+
+        .admin-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            background: #eff6f3;
+            border: 1px solid #dcebe3;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 12px;
+            font-weight: 600;
+
+            color: var(--navy);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            background: #3b9b72;
+            border-radius: 50%;
+            box-shadow: 0 0 0 3px rgba(59, 155, 114, 0.12);
+        }
+
+
+        /* =====================================================
+           STATISTICS
+        ===================================================== */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 12px;
+            margin: 22px 0 30px;
+        }
+
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.8fr);
+            align-items: start;
+            gap: 24px;
+        }
+
+        .records-panel,
+        .overview-aside {
+            min-width: 0;
+        }
+
+        .overview-aside {
+            display: grid;
+            gap: 18px;
+        }
+
+        .breakdown-panel {
+            padding: 18px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: #fff;
+            box-shadow: 0 8px 24px rgba(42, 54, 82, 0.04);
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 3px;
+        }
+
+        .panel-title h2 {
+            color: var(--navy);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .panel-total {
+            color: var(--muted);
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .panel-caption {
+            margin-bottom: 17px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .breakdown-list {
+            display: grid;
+            gap: 13px;
+        }
+
+        .breakdown-row {
+            display: grid;
+            gap: 6px;
+        }
+
+        .breakdown-label {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            color: var(--text);
+            font-size: 11px;
+        }
+
+        .breakdown-label strong {
+            color: var(--muted);
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .breakdown-track {
+            height: 6px;
+            overflow: hidden;
+            border-radius: 6px;
+            background: #edf0f5;
+        }
+
+        .breakdown-fill {
+            height: 100%;
+            min-width: 3px;
+            border-radius: inherit;
+            background: var(--bar-color, #657bd4);
+            transition: width 0.35s ease;
+        }
+
+        .breakdown-row.btech { --bar-color: #6b8fca; }
+        .breakdown-row.tenth { --bar-color: #8993a3; }
+        .breakdown-row.inter { --bar-color: #5aab8f; }
+        .breakdown-row.certifications { --bar-color: #d77b75; }
+        .breakdown-row.government { --bar-color: #d2a657; }
+
+        .stat-card {
+            padding: 17px 18px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: #fbfcfc;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: #c6d9d5;
+            box-shadow: 0 10px 24px rgba(26, 55, 63, 0.08);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            font-weight: 500;
+
+            color: var(--muted);
+
+            text-transform: uppercase;
+
+            letter-spacing: 0;
+        }
+
+        .stat-number {
+            margin-top: 4px;
+
+            font-size: 23px;
+            font-weight: 700;
+
+            color: var(--navy);
+        }
+
+
+        /* =====================================================
+           SECTION TITLE
+        ===================================================== */
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+        .section-heading h2 {
+            font-size: 17px;
+            font-weight: 600;
+
+            color: var(--navy);
+        }
+
+        .section-heading span {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+
+        /* =====================================================
+           SECTION BUTTONS
+        ===================================================== */
+
+        .sections-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            align-items: start;
+            gap: 12px;
+        }
+
+        .section-wrapper {
+            position: relative;
+        }
+
+        .section-button {
+            width: 100%;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            border: 1px solid transparent;
+            border-radius: 7px;
+            padding: 11px 14px;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+            box-shadow: 0 3px 8px rgba(26, 55, 63, 0.08);
+        }
+
+        .section-button:hover {
+            transform: translateY(-2px);
+            filter: saturate(1.08);
+            box-shadow: 0 8px 18px rgba(26, 55, 63, 0.14);
+        }
+
+        .section-button:active {
+            transform: translateY(0);
+        }
+
+
+        /* COLORS */
+
+        .btech {
+            background: #edf5fa;
+            border-color: #d8e8f1;
+            color: #28638a;
+        }
+
+        .tenth {
+            background: #f0f3f4;
+            border-color: #e0e6e7;
+            color: #52646d;
+        }
+
+        .inter {
+            background: #edf6f1;
+            border-color: #d8eadf;
+            color: #317459;
+        }
+
+        .certifications {
+            background: #fbf0ef;
+            border-color: #f1ddda;
+            color: #a64d48;
+        }
+        .government {
+            background: #faf4e9;
+            border-color: #eee1c8;
+            color: #93631e;
+        }
+
+        .custom {
+            background: #edf5f4;
+            border-color: #d9e9e7;
+            color: #397c7d;
+        }
+
+
+        /* =====================================================
+           DROPDOWN
+        ===================================================== */
+
+        .dropdown {
+            position: absolute;
+
+            top: calc(100% + 8px);
+
+            left: 50%;
+
+            transform:
+                translateX(-50%) translateY(-5px);
+
+            width: 215px;
+            max-height: 280px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: #b7c9c8 transparent;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 14px 32px rgba(20, 45, 53, 0.16);
+            padding: 6px;
+            z-index: 100;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease,
+                visibility 0.2s ease;
+        }
+
+        .dropdown.active {
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translateX(-50%) translateY(0);
+        }
+
+        .dropdown button {
+            width: 100%;
+
+            border: none;
+
+            background: transparent;
+
+            text-align: left;
+
+            padding: 10px 12px;
+
+            border-radius: 6px;
+
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 500;
+
+            color: var(--text);
+
+            cursor: pointer;
+
+            transition: background 0.16s ease, color 0.16s ease;
+        }
+
+        .dropdown button:hover {
+            background: #eff5f3;
+
+            color: var(--navy);
+        }
+
+        .dropdown .danger:hover {
+            background: #fff1f2;
+
+            color: var(--red);
+        }
+
+        .dropdown::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        .dropdown::-webkit-scrollbar-thumb {
+            background: #c5d2d1;
+            border: 2px solid #fff;
+            border-radius: 8px;
+        }
+
+
+        /* =====================================================
+           ADD SECTION
+        ===================================================== */
+
+        .add-section-container {
+            margin-top: 28px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid var(--border);
+
+            display: flex;
+
+            justify-content: center;
+        }
+
+        .add-section-button {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            border: none;
+
+            background: var(--navy);
+
+            color: white;
+
+            padding: 11px 21px;
+            border-radius: 6px;
+            font-family: inherit;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.25s;
+        }
+
+        .add-section-button:hover {
+            background: var(--navy-light);
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 7px 16px rgba(9, 41, 77, 0.18);
+        }
+
+        .plus {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        .resource-section {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: 0;
+        }
+
+        .resource-heading {
+            margin-bottom: 14px;
+            color: var(--navy);
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .resource-card {
+            min-height: 96px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 18px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: #fbfcfc;
+            color: inherit;
+            text-decoration: none;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-3px);
+            border-color: #bdd5ce;
+            box-shadow: 0 10px 24px rgba(26, 55, 63, 0.08);
+        }
+
+        .resource-mark {
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            display: grid;
+            place-items: center;
+            border-radius: 7px;
+            background: #eaf3ef;
+            color: #337b63;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .resource-image {
+            width: 46px;
+            height: 46px;
+            flex: 0 0 46px;
+            border-radius: 6px;
+            object-fit: cover;
+            transition: transform 0.25s ease;
+        }
+
+        .resource-card:hover .resource-image {
+            transform: scale(1.05);
+        }
+
+        .resource-copy {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .resource-copy strong {
+            display: block;
+            color: var(--navy);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .resource-copy span {
+            display: block;
+            margin-top: 3px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.45;
+        }
+
+        .resource-arrow {
+            color: var(--green);
+            font-size: 18px;
+            transition: transform 0.2s ease;
+        }
+
+        .resource-card:hover .resource-arrow {
+            transform: translate(2px, -2px);
+        }
+
+
+        /* =====================================================
+           MODAL
+        ===================================================== */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(5, 20, 35, 0.55);
+
+            backdrop-filter: blur(4px);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transition: 0.2s;
+
+            z-index: 1000;
+        }
+
+        .modal.active {
+            opacity: 1;
+
+            visibility: visible;
+        }
+
+        .modal-box {
+            width: min(440px, 100%);
+            background: #ffffff;
+            border-radius: 9px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.2);
+
+            transform: scale(0.94);
+
+            transition: 0.25s;
+        }
+
+        .modal.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-title {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .modal-title h2 {
+            font-size: 20px;
+
+            font-weight: 600;
+
+            color: var(--navy);
+        }
+
+        .close {
+            width: 32px;
+            height: 32px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: #f1f4f8;
+
+            color: #596575;
+
+            font-size: 20px;
+
+            cursor: pointer;
+        }
+
+        .close:hover {
+            background: #e7ecf2;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+
+            padding: 11px 13px;
+
+            border: 1px solid #d9e0e8;
+
+            border-radius: 7px;
+
+            outline: none;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            color: var(--text);
+
+            background: white;
+
+            transition: 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--blue);
+
+            box-shadow:
+                0 0 0 3px rgba(22, 119, 255, 0.08);
+        }
+
+        .modal-actions {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 25px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+
+            padding: 11px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+        }
+
+        .create-button {
+            background: var(--navy);
+
+            color: white;
+        }
+
+        .cancel-button {
+            background: #eef1f5;
+
+            color: var(--text);
+        }
+
+        .create-button:hover {
+            background: var(--navy-light);
+        }
+
+        .cancel-button:hover {
+            background: #e1e5ea;
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+            position: fixed;
+
+            right: 25px;
+            bottom: 25px;
+
+            background: var(--navy);
+
+            color: white;
+
+            padding: 13px 19px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+            font-weight: 500;
+
+            box-shadow:
+                0 10px 25px rgba(0, 0, 0, 0.15);
+
+            transform:
+                translateY(100px);
+
+            opacity: 0;
+
+            transition: 0.3s;
+
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+
+            opacity: 1;
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        :focus-visible {
+            outline: 3px solid rgba(52, 131, 109, 0.35);
+            outline-offset: 3px;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-card {
+                padding: 28px;
+            }
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+        }
+
+        @media (max-width: 760px) {
+
+            .app-shell {
+                display: block;
+            }
+
+            .app-main {
+                padding-bottom: 76px;
+            }
+
+            .side-rail {
+                position: fixed;
+                top: auto;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: calc(62px + env(safe-area-inset-bottom));
+                flex-direction: row;
+                justify-content: center;
+                padding: 6px 18px env(safe-area-inset-bottom);
+                border-top: 1px solid var(--border);
+                border-right: 0;
+                box-shadow: 0 -8px 24px rgba(42, 54, 82, 0.06);
+            }
+
+            .rail-logo,
+            .rail-footer {
+                display: none;
+            }
+
+            .side-nav {
+                width: min(360px, 100%);
+                flex-direction: row;
+                justify-content: space-around;
+                gap: 12px;
+            }
+
+            .main {
+                padding: 26px 24px 36px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .workspace-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .top-header {
+                height: 64px;
+                padding: 0 16px;
+            }
+
+            .brand {
+                font-size: 13px;
+            }
+
+            .tagline {
+                font-size: 10px;
+            }
+
+            .main {
+                padding: 22px 16px 30px;
+            }
+
+            .dashboard-card {
+                padding: 0;
+            }
+
+            .dashboard-heading h1 {
+                font-size: 23px;
+            }
+
+            .stats {
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+                gap: 10px;
+            }
+
+            .section-wrapper {
+                width: 100%;
+            }
+
+            .section-button {
+                width: 100%;
+            }
+
+            .section-heading {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 4px;
+                margin-bottom: 14px;
+            }
+
+            .dropdown {
+                width: 100%;
+                max-height: 260px;
+            }
+
+            .resource-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .resource-card {
+                padding: 14px;
+            }
+
+            .topbar-status {
+                display: none;
+            }
+
+        }
+
+        @media (max-width: 380px) {
+
+            .top-header {
+                padding: 0 12px;
+            }
+
+            .brand {
+                font-size: 12px;
+            }
+
+            .dashboard-card {
+                padding: 0;
+            }
+
+            .stat-card {
+                padding: 14px 12px;
+            }
+
+            .resource-image {
+                width: 40px;
+                height: 40px;
+                flex-basis: 40px;
+            }
+
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <div class="app-shell">
+
+        <aside class="side-rail" aria-label="Dashboard navigation">
+            <a class="rail-logo" href="#overview" aria-label="Pavan's Learning Space">P</a>
+            <nav class="side-nav" aria-label="Dashboard sections">
+                <a class="rail-link active" href="#overview" aria-label="Overview" title="Overview" aria-current="page">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3.5 10 8.5-7 8.5 7"></path><path d="M5.5 9v11h13V9M9.5 20v-6h5v6"></path></svg>
+                </a>
+                <!-- <a class="rail-link" href="#educationSections" aria-label="Education records" title="Education records">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h6l2 2h9v11h-17z"></path><path d="M3.5 9h17"></path></svg>
+                </a>
+                <a class="rail-link" href="#resourceHeading" aria-label="More from Pavan" title="More from Pavan">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 14.5 7 17a4 4 0 0 1-5.5-5.8l4-4a4 4 0 0 1 5.7 0"></path><path d="m14.5 9.5 2.5-2.5a4 4 0 0 1 5.5 5.8l-4 4a4 4 0 0 1-5.7 0"></path><path d="m8.5 15.5 7-7"></path></svg>
+                </a> -->
+            </nav>
+            <div class="rail-footer"><span class="rail-avatar" aria-label="Pavan">P</span></div>
+        </aside>
+
+        <div class="app-main">
+
+            <header class="top-header">
+                <div class="brand">
+                    <span class="brand-mark" aria-hidden="true">P</span>
+                    <div>
+                        <div>Pavan's Learning Space</div>
+                        <div class="tagline">Your personal education dashboard</div>
+                    </div>
+                </div>
+                <div class="topbar-actions">
+                    <div class="topbar-status"><span class="status-dot"></span>All systems ready</div>
+                    <span class="topbar-avatar" aria-label="Pavan">P</span>
+                </div>
+            </header>
+
+
+    <!-- =========================================================
+     MAIN
+========================================================= -->
+
+    <main class="main" id="overview">
+
+        <section class="dashboard-card">
+
+
+            <!-- Dashboard Header -->
+
+            <div class="dashboard-header">
+
+                <div class="dashboard-heading">
+
+                    <h1>
+                        Your learning workspace
+                    </h1>
+
+                    <p>
+                        Keep important records and study resources within reach.
+                    </p>
+
+                </div>
+
+                <div class="admin-badge">
+
+                    <span class="status-dot"></span>
+
+                    Admin Panel
+
+                </div>
+
+            </div>
+
+
+            <!-- Statistics -->
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Main Sections
+                    </div>
+
+                    <div class="stat-number" id="sectionCount">
+                        5
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Academic Levels
+                    </div>
+
+                    <div class="stat-number">
+                        3
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                            Certifications
+                    </div>
+
+                    <div class="stat-number">
+                            1
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-label">
+                        Other Sections
+                    </div>
+
+                    <div class="stat-number">
+                        1
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="workspace-grid">
+                <section class="records-panel" aria-labelledby="educationSectionsTitle">
+
+            <!-- Section Heading -->
+
+                <div class="section-heading" id="educationSections">
+
+                <h2 id="educationSectionsTitle">
+                    Education Sections
+                </h2>
+
+                <span>
+                    Select a section to manage
+                </span>
+
+            </div>
+
+
+            <!-- Sections -->
+
+            <div class="sections-container" id="sectionsContainer">
+
+
+                <!-- =================================================
+                 B.TECH
+            ================================================== -->
+
+                <div class="section-wrapper">
+
+                    <button class="section-button btech" onclick="toggleDropdown(this)">
+
+                        B.Tech
+
+                        <span>▼</span>
+
+                    </button>
+
+                    <div class="dropdown">
+
+                        <button onclick="openDrive('btech','feereciepts')">
+                            Fee Receipts
+                        </button>
+
+                        <button onclick="openDrive('btech','exam')">
+                            Exam Fee Receipts
+                        </button>
+
+                        <button onclick="openDrive('btech','halltickets')">
+                            Hall Tickets
+                        </button>
+
+                        <button onclick="openDrive('btech','jntuk')">
+                            JNTU-K Fee Receipts
+                        </button>
+
+                        <button onclick="openDrive('btech','crt')">
+                            Codetantra and CRT Fee Receipts
+                        </button>
+
+                        <button onclick="openDrive('btech','memos')">
+                            All Marks Memos
+                        </button>
+
+                        <button onclick="openDrive('btech','cmm')">
+                            CMM
+                        </button>
+
+                        <button onclick="openDrive('btech','pc')">
+                            PC
+                        </button>
+
+                        <button onclick="openDrive('btech','study')">
+                            Study Certificate
+                        </button>
+
+                        <button onclick="openDrive('btech','tc')">
+                            TC
+                        </button>
+
+                        <button onclick="openDrive('btech','marks')">
+                            Marks Report
+                        </button>
+
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                 10TH
+            ================================================== -->
+
+                <div class="section-wrapper">
+
+                    <button class="section-button tenth" onclick="toggleDropdown(this)">
+
+                        10th
+
+                        <span>▼</span>
+
+                    </button>
+
+                    <div class="dropdown">
+
+                        <button onclick="openDrive('tenth','oldstudy')">
+                            5th Old Study Certificate
+                        </button>
+
+                        <button onclick="openDrive('tenth','newstudy')">
+                            5th New Study Certificate
+                        </button>
+
+                        <button onclick="openDrive('tenth','study')">
+                            10th Study Certificate
+                        </button>
+
+                        <button onclick="openDrive('tenth','tc')">
+                            TC
+                        </button>
+
+                        <button onclick="openDrive('tenth','marks')">
+                            Marks Memo
+                        </button>
+
+                        <button onclick="openDrive('tenth','marksvocational')">
+                            Marks Memo Vocational
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                 INTERMEDIATE
+            ================================================== -->
+
+                <div class="section-wrapper">
+
+                    <button class="section-button inter" onclick="toggleDropdown(this)">
+
+                        Intermediate
+
+                        <span>▼</span>
+
+                    </button>
+
+                    <div class="dropdown">
+
+                        <button onclick="openDrive('intermediate','study')">
+                            Study Certificate
+                        </button>
+
+                        <button onclick="openDrive('intermediate','tc')">
+                            TC
+                        </button>
+
+                        <button onclick="openDrive('intermediate','marks')">
+                            Marks Memo
+                        </button>
+
+                        <button onclick="openDrive('intermediate','marksvocational')">
+                            Documents
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                 CERTIFICATIONS
+            ================================================== -->
+
+                <div class="section-wrapper">
+
+                    <button class="section-button certifications" onclick="toggleDropdown(this)">
+
+                        Certifications
+
+                        <span>▼</span>
+
+                    </button>
+
+                    <div class="dropdown">
+
+                        <button onclick="openDrive('certifications','aws')">
+                            AWS Certifications
+                        </button>
+
+                        <button onclick="openDrive('certifications','brain')">
+                            Brain O Vision Certifications
+                        </button>
+
+                        <button onclick="openDrive('certifications','codetantra')">
+                            CodeTantra Certifications
+                        </button>
+
+                        <button onclick="openDrive('certifications','coursera')">
+                            Coursera Certifications
+                        </button>
+
+                        <button onclick="openDrive('certifications','credly')">
+                            Credly Badges
+                        </button>
+
+                        <button onclick="openDrive('certifications','datavalley')">
+                            DataValley Certifications
+                        </button>
+
+                        <button onclick="openDrive('certifications','ndli')">
+                            Exceler and NDLI Certifications
+                        </button>
+
+                        <button onclick="openDrive('certifications','great')">
+                            Great Learning Certifications
+                        </button>
+
+                        <button onclick="openDrive('certifications','hackerrank')">
+                            HackerRank Certifications
+                        </button>
+
+                        <button onclick="openDrive('certifications','ibm')">
+                            IBM Certifications
+                        </button>
+
+                        <button onclick="openDrive('certifications','infosys')">
+                            Infosys SpringBoot Certifications    
+                        </button>
+
+                         <button onclick="openDrive('certifications','makeskilled')">
+                            Makeskilled Certifications    
+                        </button>
+
+                         <button onclick="openDrive('certifications','mongodb')">
+                            MongoDB Certifications    
+                        </button>
+
+                         <button onclick="openDrive('certifications','nptel')">
+                            NPTEL Certifications 
+                        </button>   
+
+                         <button onclick="openDrive('certifications','quantum')">
+                            Quantum Computing Certifications    
+                        </button>
+
+                         <button onclick="openDrive('certifications','salesforce')">
+                            Salesforce Certifications    
+                        </button>
+
+                         <button onclick="openDrive('certifications','smartbridge')">
+                            SmartBridge Certifications    
+                        </button>
+
+                         <button onclick="openDrive('certifications','spokentutorial')">
+                            Spoken Tutorial Certifications    
+                        </button>
+
+                         <button onclick="openDrive('certifications','unstop')">
+                            Unstop Certifications    
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+
+                 <!-- =================================================
+                    GOVERNMENT
+            ================================================== -->
+
+                <div class="section-wrapper">
+
+                    <button class="section-button government" onclick="toggleDropdown(this)">
+
+                        Government
+
+                        <span>▼</span>
+
+                    </button>
+
+                    <div class="dropdown">
+
+                        <button onclick="openDrive('govt','ssc')">
+                            SSC Applications and Hall Tickets
+                        </button>
+
+                        <button onclick="openDrive('govt','rrb')">
+                            RRB Applications and Hall Tickets
+                        </button>
+
+                        <button onclick="openDrive('govt','postalgds')">
+                            Postal GDS Applications and Hall Tickets    
+                        </button>
+
+                        <button onclick="openDrive('govt','armyssctech')">
+                            Army SSC Tech Applications and Hall Tickets
+                        </button>
+
+                       
+
+                        
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Add Section -->
+
+            <div class="add-section-container">
+
+                <button class="add-section-button" onclick="openModal()">
+
+                    <span class="plus">+</span>
+
+                    Add New Section
+
+                </button>
+                </div>
+            <img class="overview-image" src="images-removebg-preview.png" alt="Student studying with books and laptop" width="400" height="300" loading="lazy">
+            <img class="overview-image-mobile" src="class-schedule-abstract-concept-illustration-vector-removebg-preview.png" alt="Student studying with books and laptop" width="400" height="300" loading="lazy">
+
+                </section>
+
+                <aside class="overview-aside" aria-label="Education overview and resources">
+        
+                    <section class="breakdown-panel" aria-labelledby="breakdownTitle">
+                        <div class="panel-title">
+                            <h2 id="breakdownTitle">Items by section</h2>
+                            <span class="panel-total" id="breakdownTotal"></span>
+                        </div>
+                        <p class="panel-caption">Menu items by education area</p>
+                        <div class="breakdown-list" id="sectionBreakdown"></div>
+                    </section>
+
+            <section class="resource-section" aria-labelledby="resourceHeading">
+                <h2 class="resource-heading" id="resourceHeading">More from Pavan</h2>
+                <div class="resource-grid">
+                    <a class="resource-card" href="https://yvs-pavan-kumar-portfolio.netlify.app/" target="_blank" rel="noopener noreferrer">
+                        <img class="resource-image" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;w=112&amp;h=112&amp;q=80" alt="Laptop workspace" width="46" height="46" loading="lazy">
+                        <span class="resource-copy">
+                            <strong>Personal portfolio</strong>
+                            <span>Projects, experience, and contact details</span>
+                        </span>
+                        <span class="resource-arrow" aria-hidden="true">↗</span>
+                    </a>
+                    <a class="resource-card" href="https://complete-guide-exam-vault.netlify.app/" target="_blank" rel="noopener noreferrer">
+                        <img class="resource-image" src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&amp;fit=crop&amp;w=112&amp;h=112&amp;q=80" alt="Books and study notes" width="46" height="46" loading="lazy">
+                        <span class="resource-copy">
+                            <strong>Exam preparation</strong>
+                            <span>Guides and resources for government exams</span>
+                        </span>
+                        <span class="resource-arrow" aria-hidden="true">↗</span>
+                    </a>
+                </div>
+            </section>
+                </aside>
+            </div>
+        </section>
+        <p style="text-align: center; margin-top: 20px; font-size: 12px; color: var(--muted);">
+            &copy; 2026 Pavan's Education Space. All rights reserved.
+        </p>
+
+    </main>
+
+        </div>
+    </div>
+
+
+    <!-- =========================================================
+     MODAL
+========================================================= -->
+
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+
+
+        <div class="modal-box">
+
+
+            <div class="modal-title">
+
+                <h2 id="modalTitle">
+                    Add New Section
+                </h2>
+
+                <button class="close" type="button" aria-label="Close dialog" onclick="closeModal()">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="sectionName">
+                    Section Name
+                </label>
+
+                <input type="text" id="sectionName" placeholder="Example: Diploma">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="sectionColor">
+                    Section Color
+                </label>
+
+                <select id="sectionColor">
+
+                    <option value="custom">
+                        Cyan
+                    </option>
+
+                    <option value="btech">
+                        Blue
+                    </option>
+
+                    <option value="tenth">
+                        Gray
+                    </option>
+
+                    <option value="inter">
+                        Green
+                    </option>
+
+                    <option value="certifications">
+                        Red
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button class="cancel-button" onclick="closeModal()">
+
+                    Cancel
+
+                </button>
+
+                <button class="create-button" onclick="createSection()">
+
+                    Create Section
+
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Toast -->
+
+    <div class="toast" id="toast">
+
+        Section created successfully.
+
+    </div>
+
+
+    <!-- <script>
+
+    /* =====================================================
+       DROPDOWNS
+    ===================================================== */
+
+    function toggleDropdown(button) {
+
+        const dropdown =
+            button.nextElementSibling;
+
+        document
+            .querySelectorAll(".dropdown")
+            .forEach(menu => {
+
+                if (menu !== dropdown) {
+
+                    menu.classList.remove("active");
+
+                }
+
+            });
+
+        dropdown.classList.toggle("active");
+    }
+
+
+    /* =====================================================
+       CLOSE DROPDOWNS
+    ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            if (!event.target.closest(".section-wrapper")) {
+
+                document
+                    .querySelectorAll(".dropdown")
+                    .forEach(menu => {
+
+                        menu.classList.remove("active");
+
+                    });
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       OPEN PAGE
+    ===================================================== */
+
+    function openPage(name) {
+
+        showToast(
+            "Opening " + name
+        );
+
+        /*
+            Later connect these buttons
+            to your actual pages.
+
+            Example:
+
+            window.location.href =
+                "/admin/btech/students";
+
+        */
+
+    }
+
+
+    /* =====================================================
+       MODAL
+    ===================================================== */
+
+    function openModal() {
+
+        document
+            .getElementById("modal")
+            .classList.add("active");
+
+        document
+            .getElementById("sectionName")
+            .focus();
+
+    }
+
+
+    function closeModal() {
+
+        document
+            .getElementById("modal")
+            .classList.remove("active");
+
+    }
+
+
+    /* =====================================================
+       CREATE SECTION
+    ===================================================== */
+
+    function createSection() {
+
+        const name =
+            document
+                .getElementById("sectionName")
+                .value
+                .trim();
+
+        const color =
+            document
+                .getElementById("sectionColor")
+                .value;
+
+
+        if (!name) {
+
+            showToast(
+                "Please enter a section name."
+            );
+
+            return;
+
+        }
+
+
+        const container =
+            document
+                .getElementById("sectionsContainer");
+
+
+        /* Wrapper */
+
+        const wrapper =
+            document.createElement("div");
+
+        wrapper.className =
+            "section-wrapper";
+
+
+        /* Button */
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "section-button " + color;
+
+        button.innerHTML =
+            name + " <span>▼</span>";
+
+        button.onclick =
+            function(event) {
+
+                event.stopPropagation();
+
+                toggleDropdown(button);
+
+            };
+
+
+        /* Dropdown */
+
+        const dropdown =
+            document.createElement("div");
+
+        dropdown.className =
+            "dropdown";
+
+
+        /* Default options */
+
+        const options = [
+
+            "Add Data",
+            "View Data",
+            "Manage Data"
+
+        ];
+
+
+        options.forEach(
+            option => {
+
+                const item =
+                    document.createElement("button");
+
+                item.textContent =
+                    option;
+
+                item.onclick =
+                    function() {
+
+                        openPage(
+                            name +
+                            " - " +
+                            option
+                        );
+
+                    };
+
+                dropdown.appendChild(item);
+
+            }
+        );
+
+
+        /* Delete */
+
+        const deleteButton =
+            document.createElement("button");
+
+        deleteButton.className =
+            "danger";
+
+        deleteButton.textContent =
+            "Delete Section";
+
+        deleteButton.onclick =
+            function() {
+
+                wrapper.remove();
+
+                updateCount();
+
+                showToast(
+                    name +
+                    " deleted."
+                );
+
+            };
+
+
+        dropdown.appendChild(
+            deleteButton
+        );
+
+
+        wrapper.appendChild(button);
+
+        wrapper.appendChild(dropdown);
+
+        container.appendChild(wrapper);
+
+
+        /* Reset */
+
+        document
+            .getElementById("sectionName")
+            .value = "";
+
+
+        closeModal();
+
+        updateCount();
+
+        showToast(
+            name +
+            " created successfully."
+        );
+
+    }
+
+
+    /* =====================================================
+       SECTION COUNT
+    ===================================================== */
+
+    function updateCount() {
+
+        const count =
+            document
+                .querySelectorAll(
+                    "#sectionsContainer .section-wrapper"
+                )
+                .length;
+
+        document
+            .getElementById("sectionCount")
+            .textContent = count;
+
+    }
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    let toastTimer;
+
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById("toast");
+
+        toast.textContent =
+            message;
+
+        toast.classList.add("show");
+
+
+        clearTimeout(toastTimer);
+
+
+        toastTimer =
+            setTimeout(
+                function() {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                2500
+            );
+
+    }
+
+
+    /* =====================================================
+       MODAL OUTSIDE CLICK
+    ===================================================== */
+
+    document
+        .getElementById("modal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (event.target === this) {
+
+                    closeModal();
+
+                }
+
+            }
+        );
+
+
+    /* =====================================================
+       ESC KEY
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Escape") {
+
+                closeModal();
+
+            }
+
+        }
+    );
+    const driveLinks = {
+
+    btech: {
+
+        studentData:
+        "YOUR GOOGLE DRIVE LINK",
+
+        subjects:
+        "YOUR GOOGLE DRIVE LINK",
+
+        marks:
+        "YOUR GOOGLE DRIVE LINK",
+
+        projects:
+        "YOUR GOOGLE DRIVE LINK",
+
+        documents:
+        "YOUR GOOGLE DRIVE LINK"
+    },
+
+    tenth: {
+
+        studentData:
+        "YOUR GOOGLE DRIVE LINK",
+
+        subjects:
+        "YOUR GOOGLE DRIVE LINK",
+
+        marks:
+        "YOUR GOOGLE DRIVE LINK",
+
+        documents:
+        "YOUR GOOGLE DRIVE LINK"
+    },
+
+    intermediate: {
+
+        studentData:
+        "YOUR GOOGLE DRIVE LINK",
+
+        subjects:
+        "YOUR GOOGLE DRIVE LINK",
+
+        marks:
+        "YOUR GOOGLE DRIVE LINK",
+
+        documents:
+        "YOUR GOOGLE DRIVE LINK"
+    },
+
+    certifications: {
+
+        certificates:
+        "YOUR GOOGLE DRIVE LINK",
+
+        studentData:
+        "YOUR GOOGLE DRIVE LINK",
+
+        documents:
+        "YOUR GOOGLE DRIVE LINK"
+    }
+};
+
+</script> -->
+    <script>
+
+        /* =====================================================
+           GOOGLE DRIVE LINKS
+           
+           PASTE YOUR ACTUAL GOOGLE DRIVE LINKS HERE
+        ===================================================== */
+
+        const driveLinks = {
+
+            /* ================= B.TECH ================= */
+
+            btech: {
+
+                feereciepts:
+                    "https://drive.google.com/file/d/1X8Fx8BCJqC_IcuIOc_aHCsE6W-jyLSiH/view?usp=sharing",
+
+                exam:
+                    "https://drive.google.com/file/d/1KcCmbHKz75lt2-uepxNG1fqqTksojVpH/view?usp=sharing",
+
+                halltickets:
+                    "https://drive.google.com/file/d/1y166jxLr01JSjSvfMynFAjVGPRqwDhcM/view?usp=sharing",
+
+                jntuk:
+                    "https://drive.google.com/file/d/1zhkBs12C4Xswm34X4CwiSiOTTyVx8m8D/view?usp=sharing",
+
+                crt:
+                    "https://drive.google.com/file/d/1xuR_2cJVWlgjq8OwYinbyY7DbLKTqcLz/view?usp=sharing",
+
+                memos:
+                    "https://drive.google.com/file/d/1m9tUHtqtWcRddT1vQjGm1_YsJJxx0fBT/view?usp=sharing",
+
+                cmm:
+                    "https://drive.google.com/file/d/1kroTuPdKuLYNi1JWrNJxBvZy1oALQDCQ/view?usp=sharing",
+
+                pc:
+                    "https://drive.google.com/file/d/1ln6esZYaT97FFSrK_B5JyubXtW89gDpd/view?usp=sharing",
+
+                study:
+                    "https://drive.google.com/file/d/1JyRcD91JJC5ceYh-KVNRJ29rfD60h2X0/view?usp=sharing",
+
+                tc:
+                    "https://drive.google.com/file/d/1dGzKLp5Gj1cgUOIW29DgTT33tJKcgRkn/view?usp=sharing",
+
+                marks:
+                    "https://drive.google.com/file/d/1_t8p-yns3RVMY3lRHy75XREvymr3tjOl/view?usp=sharing"
+
+            },
+
+
+            /* ================= 10TH ================= */
+
+            tenth: {
+
+                oldstudy:
+                    "https://drive.google.com/file/d/1Umig2cVKG4J7gM-2zE3GHjwC1VchvbqP/view?usp=sharing",
+
+                newstudy:
+                    "https://drive.google.com/file/d/1Lw6q6W0YVaWJQorTqAehBP1I4N1O-j5i/view?usp=sharing",
+
+                study:
+                    "https://drive.google.com/file/d/1Yq_3gX0xkDUMINM_bYebga2dVihGVi_E/view?usp=sharing",
+
+                tc:
+                    "https://drive.google.com/file/d/1sM94HSRMgDJrPDKpWy44rLs7bk7jllae/view?usp=sharing",
+
+                marks:
+                    "https://drive.google.com/file/d/1W9uFoQER9biz4kF1IOrq9HYBRSNn2iIo/view?usp=sharing",
+
+                marksvocational:
+                    "https://drive.google.com/file/d/1X66zr3Wvwf1g0yGZDSxo7j5ZfCjyTYrW/view?usp=sharing"
+
+            },
+
+
+            /* ================= INTERMEDIATE ================= */
+
+            intermediate: {
+
+                study:
+                    "https://drive.google.com/file/d/1VcRy0obPJOWpJeOXFXQwk7VeOTuzSlEV/view?usp=sharing",
+
+                tc:
+                    "https://drive.google.com/file/d/1M7J_ZIRyONsXLk6ugB_yisQ9nfMm9BTa/view?usp=sharing",
+
+                marks:
+                    "https://drive.google.com/file/d/1HvDa4xadIXH7axppcf-YGLPWbR5l8sg0/view?usp=sharing",
+
+                documents:
+                    "YOUR_INTERMEDIATE_DOCUMENTS_DRIVE_LINK"
+
+            },
+
+
+            /* ================= CERTIFICATIONS ================= */
+
+            certifications: {
+
+                aws:
+                    "https://drive.google.com/drive/folders/14v3mUajrnysh_qhGVMgqCCCPd1xg3gjv?usp=sharing",
+
+                brain:
+                    "https://drive.google.com/drive/folders/1m5v2hGP6M5gYW39t_HImcftvWHiqS0Si?usp=sharing",
+
+                codetantra:
+                    "https://drive.google.com/drive/folders/1C65zG-d-PNwl7CJeb1b-PYXwj2BpDP9z?usp=sharing",
+
+                coursera:
+                    "https://drive.google.com/drive/folders/1xvhh0ZreptOo6QDw3kHztsorofZiafUT?usp=sharing",
+                
+                credly:
+                    "https://drive.google.com/drive/folders/1Y2If8UJeMS48e_pOLIoY0DPK5amm2tzR?usp=sharing",
+
+                datavalley:
+                    "https://drive.google.com/drive/folders/1Hxx21j6Kgpxg3be62kON9GIV0a2Pa5tX?usp=sharing",
+                
+                ndli:
+                    "https://drive.google.com/drive/folders/1BbfTPrC2l6mH1poLU4biScZ-AmAPa1XY?usp=sharing",
+                
+                great:
+                    "https://drive.google.com/drive/folders/18rW1XhlS8TUrHtX4D8FavYBw92bWbQZS?usp=sharing",
+
+                hackerrank:
+                    "https://drive.google.com/drive/folders/1EMvohOk-vXM3VsK6gZL3f0Si1oBicwOW?usp=sharing",
+                
+                ibm:
+                    "https://drive.google.com/drive/folders/18F_E45GH4Acuq_TzbKPptbpVdXFFTl-b?usp=sharing",
+
+                infosys:
+                    "https://drive.google.com/drive/folders/1jBt8tfGdRhMBgm9Odvmh3x8eVT_Ot-T9?usp=sharing",
+                
+                makeskilled:
+                    "https://drive.google.com/drive/folders/1mx3DOM500QfjNZSDSJrigl8QlDkS_2DW?usp=sharing",
+
+                mongodb:
+                    "https://drive.google.com/drive/folders/1JRy-8Sba0rEdzW6S08qCe6c4iHv1dYeg?usp=sharing",
+
+                nptel:
+                    "https://drive.google.com/drive/folders/1IbSI7GQghl2qRi4vLBqfbneBRyfZqbu3?usp=sharing",
+
+                quantum:
+                    "https://drive.google.com/drive/folders/1UazAmPcD_YRH2Bd59t5QnXyuXWBImQ-I?usp=sharing",
+                
+                salesforce:
+                    "https://drive.google.com/drive/folders/1CvlG0rarPLsjpQaudyGIR-lsO8KPBzLP?usp=sharing",
+
+                smartbridge:
+                    "https://drive.google.com/drive/folders/1NC6UkX1CUtAToh2QnmOM1a6T2LzoVkSM?usp=sharing",
+
+                spokentutorial:
+                    "https://drive.google.com/drive/folders/1sKOgjqPVT4GsTS3YMMEE0d8YV7LnaIYo?usp=sharing",
+
+                unstop:
+                    "https://drive.google.com/drive/folders/1NZgEsXrzXKmdGeu6rj8weuy5VQu791o3?usp=sharing"
+
+                
+            },
+
+            /* ================= GOVERNMENT ================= */
+            govt: {
+
+                ssc:
+                    "https://drive.google.com/drive/folders/1V4Ru8em8FdwAEl6WQUFHrMLBS0jCv5T0?usp=sharing",
+
+                rrb:
+                    "https://drive.google.com/drive/folders/1rDOC9gvrUdvkXWloCShmR4DVvB75nMoN?usp=sharing",
+
+                postalgds:
+                    "https://drive.google.com/drive/folders/1thqTHwrRn4JM7fCHnr5JOGMczbxTr-ul?usp=sharing",
+
+                armyssctech:
+                    "https://drive.google.com/drive/folders/1fx_Vs2AzpT07nsOXo7ije8LOk6QyLU2G?usp=sharing"
+
+            }
+
+        };
+
+
+        /* =====================================================
+           OPEN GOOGLE DRIVE LINK
+        ===================================================== */
+
+        function openDrive(section, item) {
+
+            const link =
+                driveLinks?.[section]?.[item];
+
+
+            /*
+             * Check whether a link exists
+             */
+
+            if (
+                !link ||
+                link.trim() === "" ||
+                link.includes("YOUR_")
+            ) {
+
+                showToast(
+                    "Drive link is not added yet."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Open the Google Drive PDF/link
+             * in a new browser tab.
+             */
+
+            window.open(
+                link,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        }
+
+
+        /* =====================================================
+           DROPDOWN
+        ===================================================== */
+
+        document
+            .querySelectorAll(".section-button")
+            .forEach((button, index) => {
+
+                const dropdown =
+                    button.nextElementSibling;
+
+                dropdown.id =
+                    "section-dropdown-" + (index + 1);
+
+                button.setAttribute(
+                    "aria-controls",
+                    dropdown.id
+                );
+
+                button.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+
+            });
+
+
+        function closeDropdowns() {
+
+            document
+                .querySelectorAll(".dropdown")
+                .forEach(menu => {
+
+                    menu.classList.remove("active");
+
+                    if (menu.previousElementSibling) {
+
+                        menu.previousElementSibling.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+                    }
+
+                });
+
+        }
+
+
+        function toggleDropdown(button) {
+
+            const dropdown =
+                button.nextElementSibling;
+
+            const shouldOpen =
+                !dropdown.classList.contains("active");
+
+            closeDropdowns();
+
+            if (shouldOpen) {
+
+                dropdown.classList.add("active");
+
+                button.setAttribute(
+                    "aria-expanded",
+                    "true"
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CLOSE DROPDOWNS WHEN CLICKING OUTSIDE
+        ===================================================== */
+
+        document.addEventListener(
+            "click",
+            function (event) {
+
+                /*
+                 * If clicked outside a section,
+                 * close every dropdown.
+                 */
+
+                if (
+                    !event.target.closest(
+                        ".section-wrapper"
+                    )
+                ) {
+
+                    closeDropdowns();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           OLD OPEN PAGE FUNCTION
+           
+           Kept here so your existing HTML doesn't break
+           if you have any buttons still using openPage().
+        ===================================================== */
+
+        function openPage(name) {
+
+            showToast(
+                "No Drive link configured for " +
+                name
+            );
+
+        }
+
+
+        /* =====================================================
+           ADD SECTION MODAL
+        ===================================================== */
+
+        function openModal() {
+
+            const modal =
+                document.getElementById(
+                    "modal"
+                );
+
+
+            modal.classList.add(
+                "active"
+            );
+
+
+            /*
+             * Automatically focus
+             * Section Name input.
+             */
+
+            const input =
+                document.getElementById(
+                    "sectionName"
+                );
+
+
+            if (input) {
+
+                setTimeout(
+                    function () {
+
+                        input.focus();
+
+                    },
+                    200
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CLOSE MODAL
+        ===================================================== */
+
+        function closeModal() {
+
+            const modal =
+                document.getElementById(
+                    "modal"
+                );
+
+
+            modal.classList.remove(
+                "active"
+            );
+
+        }
+
+
+        /* =====================================================
+           CREATE NEW SECTION
+        ===================================================== */
+
+        function createSection() {
+
+            const name =
+                document
+                    .getElementById(
+                        "sectionName"
+                    )
+                    .value
+                    .trim();
+
+
+            const color =
+                document
+                    .getElementById(
+                        "sectionColor"
+                    )
+                    .value;
+
+
+            /*
+             * Validate section name
+             */
+
+            if (!name) {
+
+                showToast(
+                    "Please enter a section name."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Main sections container
+             */
+
+            const container =
+                document.getElementById(
+                    "sectionsContainer"
+                );
+
+
+            /*
+             * Create wrapper
+             */
+
+            const wrapper =
+                document.createElement(
+                    "div"
+                );
+
+            wrapper.className =
+                "section-wrapper";
+
+
+            /*
+             * Create section button
+             */
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.className =
+                "section-button " +
+                color;
+
+
+            button.innerHTML =
+                name +
+                ' <span>▼</span>';
+
+
+            /*
+             * Dropdown toggle
+             */
+
+            button.onclick =
+                function (event) {
+
+                    event.stopPropagation();
+
+                    toggleDropdown(
+                        button
+                    );
+
+                };
+
+
+            /*
+             * Create dropdown
+             */
+
+            const dropdown =
+                document.createElement(
+                    "div"
+                );
+
+            dropdown.className =
+                "dropdown";
+
+            dropdown.id =
+                "section-dropdown-new-" + Date.now();
+
+            button.setAttribute(
+                "aria-controls",
+                dropdown.id
+            );
+
+            button.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+
+            /*
+             * Default options
+             */
+
+            const options = [
+
+                "Student Data",
+                "Documents",
+                "Results",
+                "Other"
+
+            ];
+
+
+            /*
+             * Create dropdown buttons
+             */
+
+            options.forEach(
+                function (option) {
+
+                    const item =
+                        document.createElement(
+                            "button"
+                        );
+
+
+                    item.textContent =
+                        option;
+
+
+                    item.onclick =
+                        function () {
+
+                            showToast(
+                                name +
+                                " → " +
+                                option +
+                                " does not have a Drive link yet."
+                            );
+
+                        };
+
+
+                    dropdown.appendChild(
+                        item
+                    );
+
+                }
+            );
+
+
+            /*
+             * Delete section
+             */
+
+            const deleteButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            deleteButton.className =
+                "danger";
+
+
+            deleteButton.textContent =
+                "Delete Section";
+
+
+            deleteButton.onclick =
+                function () {
+
+                    const confirmDelete =
+                        confirm(
+                            "Delete " +
+                            name +
+                            " section?"
+                        );
+
+
+                    if (
+                        !confirmDelete
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    wrapper.remove();
+
+
+                    updateCount();
+
+
+                    showToast(
+                        name +
+                        " deleted successfully."
+                    );
+
+                };
+
+
+            dropdown.appendChild(
+                deleteButton
+            );
+
+
+            /*
+             * Add elements
+             */
+
+            wrapper.appendChild(
+                button
+            );
+
+            wrapper.appendChild(
+                dropdown
+            );
+
+
+            container.appendChild(
+                wrapper
+            );
+
+
+            /*
+             * Reset input
+             */
+
+            document
+                .getElementById(
+                    "sectionName"
+                )
+                .value = "";
+
+
+            /*
+             * Close modal
+             */
+
+            closeModal();
+
+
+            /*
+             * Update count
+             */
+
+            updateCount();
+
+
+            /*
+             * Success message
+             */
+
+            showToast(
+                name +
+                " created successfully."
+            );
+
+        }
+
+
+        /* =====================================================
+           UPDATE SECTION COUNT
+        ===================================================== */
+
+        function updateSectionBreakdown() {
+
+            const list =
+                document.getElementById("sectionBreakdown");
+
+            const totalLabel =
+                document.getElementById("breakdownTotal");
+
+            if (!list) {
+
+                return;
+
+            }
+
+            const sections =
+                Array.from(
+                    document.querySelectorAll(
+                        "#sectionsContainer .section-wrapper"
+                    )
+                ).map(wrapper => {
+
+                    const button =
+                        wrapper.querySelector(".section-button");
+
+                    const dropdown =
+                        wrapper.querySelector(".dropdown");
+
+                    return {
+                        button,
+                        name: button.textContent.replace("▼", "").trim(),
+                        count: dropdown.querySelectorAll(
+                            "button:not(.danger)"
+                        ).length
+                    };
+
+                });
+
+            const maximum =
+                Math.max(...sections.map(section => section.count), 1);
+
+            const total =
+                sections.reduce(
+                    (sum, section) => sum + section.count,
+                    0
+                );
+
+            list.replaceChildren();
+
+            sections.forEach(section => {
+
+                const row =
+                    document.createElement("div");
+
+                const sectionClass =
+                    Array.from(section.button.classList).find(className =>
+                        ["btech", "tenth", "inter", "certifications", "government"].includes(className)
+                    );
+
+                row.className =
+                    "breakdown-row" +
+                    (sectionClass ? " " + sectionClass : "");
+
+                const label =
+                    document.createElement("div");
+
+                label.className = "breakdown-label";
+
+                const name =
+                    document.createElement("span");
+
+                name.textContent = section.name;
+
+                const count =
+                    document.createElement("strong");
+
+                count.textContent = section.count;
+
+                label.append(name, count);
+
+                const track =
+                    document.createElement("div");
+
+                track.className = "breakdown-track";
+                track.setAttribute("role", "img");
+                track.setAttribute(
+                    "aria-label",
+                    section.name + ": " + section.count + " menu items"
+                );
+
+                const fill =
+                    document.createElement("div");
+
+                fill.className = "breakdown-fill";
+                fill.style.width =
+                    (section.count / maximum * 100) + "%";
+
+                track.appendChild(fill);
+                row.append(label, track);
+                list.appendChild(row);
+
+            });
+
+            if (totalLabel) {
+
+                totalLabel.textContent =
+                    total + " items";
+
+            }
+
+        }
+
+
+        function updateCount() {
+
+            const count =
+                document.querySelectorAll(
+                    "#sectionsContainer .section-wrapper"
+                ).length;
+
+
+            const counter =
+                document.getElementById(
+                    "sectionCount"
+                );
+
+
+            if (counter) {
+
+                counter.textContent =
+                    count;
+
+            }
+
+            updateSectionBreakdown();
+
+        }
+
+
+        /* =====================================================
+           TOAST MESSAGE
+        ===================================================== */
+
+        let toastTimer;
+
+
+        function showToast(message) {
+
+            const toast =
+                document.getElementById(
+                    "toast"
+                );
+
+
+            if (!toast) {
+
+                return;
+
+            }
+
+
+            toast.textContent =
+                message;
+
+
+            toast.classList.add(
+                "show"
+            );
+
+
+            clearTimeout(
+                toastTimer
+            );
+
+
+            toastTimer =
+                setTimeout(
+                    function () {
+
+                        toast.classList.remove(
+                            "show"
+                        );
+
+                    },
+                    2500
+                );
+
+        }
+
+
+        /* =====================================================
+           MODAL OUTSIDE CLICK
+        ===================================================== */
+
+        const modal =
+            document.getElementById(
+                "modal"
+            );
+
+
+        if (modal) {
+
+            modal.addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        event.target === this
+                    ) {
+
+                        closeModal();
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        document
+            .querySelectorAll(".rail-link")
+            .forEach(link => {
+
+                link.addEventListener("click", function () {
+
+                    document
+                        .querySelectorAll(".rail-link")
+                        .forEach(item => {
+
+                            item.classList.remove("active");
+                            item.removeAttribute("aria-current");
+
+                        });
+
+                    this.classList.add("active");
+                    this.setAttribute("aria-current", "location");
+
+                });
+
+            });
+
+        updateCount();
+
+
+        /* =====================================================
+           ESC KEY
+        ===================================================== */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeModal();
+                    closeDropdowns();
+
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
